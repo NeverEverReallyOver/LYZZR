@@ -1,0 +1,41 @@
+{
+  "timestamp": "20260211_140238",
+  "participants": [
+    "Alex",
+    "Amy"
+  ],
+  "history": [
+    {
+      "name": "Alex",
+      "content": "你好呀！很高兴认识你。"
+    },
+    {
+      "name": "Amy",
+      "content": "哈喽！你也在这里相亲吗？我看你的资料很有趣。"
+    },
+    {
+      "name": "Alex",
+      "content": "我对这个话题也很感兴趣！"
+    },
+    {
+      "name": "Amy",
+      "content": "我也挺喜欢的！最近有看什么好书或者电影吗？"
+    },
+    {
+      "name": "Alex",
+      "content": "科幻片是我的最爱，特别是《星际穿越》。你呢？"
+    },
+    {
+      "name": "Amy",
+      "content": "这个观点很有趣，能展开说说吗？"
+    },
+    {
+      "name": "Alex",
+      "content": "这个观点很有趣，能展开说说吗？"
+    },
+    {
+      "name": "Amy",
+      "content": "这个观点很有趣，能展开说说吗？"
+    }
+  ]
+}
