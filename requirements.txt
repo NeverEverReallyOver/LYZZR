@@ -2,4 +2,4 @@ streamlit
 supabase
 psycopg2-binary
 SQLAlchemy
-agentscope
+git+https://github.com/modelscope/agentscope.git
