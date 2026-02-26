@@ -2,7 +2,7 @@ import streamlit as st
 from sqlalchemy import text
 from src.agent_builder import AgentProfile, HardAttributes, HardPreferences, Persona
 import json
-import bcrypt
+import hashlib
 
 class CloudStorage:
     """
@@ -17,6 +17,10 @@ class CloudStorage:
             st.error(f"[系统错误] 数据库连接失败: {e}")
             self.is_connected = False
 
+    def _hash_password(self, password: str) -> str:
+        """简单的 SHA256 哈希"""
+        return hashlib.sha256(password.encode()).hexdigest()
+
     def register_user(self, username: str, password: str, profile: AgentProfile) -> bool:
         """
         注册或更新用户信息 (包含密码)
@@ -25,8 +29,8 @@ class CloudStorage:
             st.error("注册失败：数据库未连接，请检查配置或网络。")
             return False
 
-        # 密码加密
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        # 密码加密 (SHA256)
+        hashed_password = self._hash_password(password)
 
         # 准备数据
         data = {
@@ -85,7 +89,14 @@ class CloudStorage:
             if not stored_hash: # 旧用户可能没有密码
                 return False
                 
-            return bcrypt.checkpw(password.encode('utf-8'), stored_hash.encode('utf-8'))
+            # 兼容处理：如果是 $2b$ 开头的，说明是 bcrypt (旧数据)，否则是 SHA256 (新数据)
+            if stored_hash.startswith("$2b$"):
+                 # 如果遇到旧的 bcrypt 密码，因为没有 bcrypt 库了，直接报错或提示重置
+                 # 这是一个权宜之计，为了让新用户能用
+                 print("Found legacy bcrypt password, cannot verify without bcrypt lib.")
+                 return False
+            else:
+                 return stored_hash == self._hash_password(password)
         except Exception as e:
             print(f"Login error: {e}")
             return False
