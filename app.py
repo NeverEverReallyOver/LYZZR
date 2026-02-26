@@ -19,10 +19,14 @@ from src.storage import CloudStorage
 
 # 页面配置
 st.set_page_config(
-    page_title="恋与代理人 - 公网真实版",
+    page_title="恋与代理人 - Love and Agents",
     page_icon="💘",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
+
+# [DEBUG] 强制版本号显示，用于验证部署是否更新
+st.caption("🚀 Version 2.1 (Public Build - No Bcrypt) | Last Updated: 2026-02-26")
 
 # 构造 AgentProfile 对象
 def build_agent_profile(data, user_id, preferences):
